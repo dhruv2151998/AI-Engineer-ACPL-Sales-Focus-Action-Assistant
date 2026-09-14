@@ -1,0 +1,23 @@
+Using the DataSet/ folder, produce a data profiling report. Read:
+- DataSet/DATA_DICTIONARY.md
+- All 7 CSVs: dim_distributor.csv, dim_sku.csv, dim_geo.csv,
+  fact_primary_sales.csv, fact_targets.csv, promotions.csv, stockouts.csv
+- DataSet/action_playbook.xlsx
+- All 6 files in DataSet/documents/
+
+For each CSV: report row count, column names with dtypes, null count per
+column, and 3 sample rows.
+For action_playbook.xlsx: report each sheet's columns and 3 sample rows.
+For each document in documents/: report a 2-3 sentence summary of its
+content and purpose, and state whether it appears relevant to sales
+performance/actions or is unrelated ("noise").
+
+Then, specifically compare region, territory, brand, and distributor
+identifiers ACROSS all seven CSVs and flag every inconsistency: different
+spellings, casing, granularity mismatches, or IDs that mean different
+things in different files. List each one explicitly with the exact
+conflicting values found, not a general description.
+
+Write this entire report to a new file: docs/data_profile.md
+Do not create any other files. Do not write any processing/cleaning code
+yet. Do not modify any file in DataSet/.

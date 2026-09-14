@@ -1,0 +1,13 @@
+Now run all three scripts:
+Let me verify the outputs
+All done. Final summary:
+
+**scripts/prepare_data.py** → `data/warehouse.db` with 8 tables, **data/prep_summary.json**
+- 40 / 120 / 12 / 74,880 / 720 / 40 / 520 rows per source
+- National FY26 primary-sales total: **₹1,357,631,078.74**
+
+**scripts/parse_playbook.py** → `playbook_rules` table (8 rules, PB-R-01 to PB-R-08) with queryable `condition_expression` JSON
+
+**scripts/load_documents.py** → `data/documents.json` (6 files, 4 relevant, 2 noise)
+
+**docs/mismatches.md** — 9 resolved inconsistencies (region casing, column names, date formats, grain mismatches, missing territory_code in stockouts)

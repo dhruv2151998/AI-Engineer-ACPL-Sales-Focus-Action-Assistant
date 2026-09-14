@@ -1,0 +1,31 @@
+Implement real logic for POST /ask in src/service/main.py (or a new
+src/service/ask.py imported into main.py):
+
+1. Send the question to Gemini (via the google-generativeai Python SDK,
+   using GEMINI_API_KEY read from environment as LLM_API_KEY) to extract
+   structured intent as JSON only: {"metric": ..., "brand": ..., "region":
+   ..., "time_period": ...}. Use a system instruction that forces JSON-only
+   output, no prose.
+2. In plain Python (not Gemini), validate every non-null extracted entity
+   against the master tables in data/warehouse.db (dim_sku for brand,
+   dim_geo for region). If anything fails to resolve, immediately return
+   status "NO_ANSWER" with a specific reason in "answer" — do not call
+   Gemini again.
+3. If entities validate, run the matching deterministic pandas/SQL query
+   against warehouse.db (join through dim_sku/dim_geo as needed for
+   brand/region aggregation, per the grain notes in docs/mismatches.md).
+   If it returns zero rows, return NO_ANSWER with reason.
+4. Build the "evidence" array directly from the query's result rows —
+   real field:value pairs, nothing invented.
+5. Send only those evidence rows to Gemini with a system instruction that
+   forbids stating any number not present in the evidence, asking it to
+   phrase the final plain-English answer.
+6. Wrap both Gemini calls with time.perf_counter() for total latency_ms.
+   Compute cost_usd from actual token usage in Gemini's response
+   (usage_metadata) times current Gemini pricing per 1M tokens (look up
+   current gemini-1.5-flash or gemini-2.0-flash pricing, whichever model
+   you use, and hardcode the rate as a constant with a comment noting it
+   may need updating).
+
+Add google-generativeai to requirements.txt if missing. Do not touch
+/actions yet. Show me a sample curl command to test /ask once done.

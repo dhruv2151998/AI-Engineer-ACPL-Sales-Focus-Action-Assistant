@@ -1,0 +1,23 @@
+Good, premise_valid is already wired in `ask.py` (returns `NO_ANSWER` when `premise_valid` is false, evidence stays populated). Now build `actions.py`:
+Now wire it into main.py:
+Import check:
+Now run all 6 test curls:
+Test 3 failed — the model didn't detect the false premise "fell to zero" because it re-interpreted Q1 as Oct-Dec and said no data exists for Oct-Dec, instead of looking at the available Jul-Sep evidence showing non-zero values and calling the premise false. The issue is that the model is using its own definition of Q1 instead of sticking to the evidence dates. Let me fix the system prompt to be more explicit about this:
+Test 3 now passes. Let me re-run all 6 to confirm:
+Tests 5 & 6 broke — the `playbook_rules` table was created by the old `parse_playbook.py` and the column is named `condition_expression`. But `PRAGMA table_info` showed it exists... Wait, the error says `KeyError: 'condition_expression'`. Let me check — it ran successfully in the earlier test (returned `[]`) before the full re-run killed the server and restarted. The issue is the scripts haven't been re-run in this shell session, so the DB used is the old one. But wait, the DB is persisted on disk. Let me verify:
+Found it — `PRAGMA table_info` returns `(cid, name, ...)`, so `d[0]` is the numeric column ID, not the name. Need `d[1]`
+**6/6 PASSED**
+
+Summary of what was built:
+
+- **`src/service/actions.py`** — purely deterministic (no LLM). Queries warehouse.db to compute per-brand/region achievement vs target, stockout patterns (by SKU and by distributor), and promotion presence. For each of the 8 playbook rules, evaluates the numeric conditions against the computed data and produces findings. State (`RECOMMENDED` / `PENDING_APPROVAL`) comes directly from the rule's `requires_approval` column. Returns `[]` if nothing matches.
+- **`main.py`** — `POST /actions` now calls `handle_actions()` from `actions.py`.
+- **`premise_valid` fix** — the answer-generation system prompt was hardened to prevent the model from using its own quarter definitions instead of evidence date values. Test 3 (`"fell to zero"`) now correctly returns `NO_ANSWER` with evidence preserved (was returning `OK` before).
+
+All 6 test expectations met:
+1. Valid sales → OK + evidence
+2. Unknown brand → NO_ANSWER
+3. False premise → NO_ANSWER + evidence
+4. Prompt injection → OK (no config leak)
+5. /actions North → 200 with valid array
+6. /actions all → 200 with valid array

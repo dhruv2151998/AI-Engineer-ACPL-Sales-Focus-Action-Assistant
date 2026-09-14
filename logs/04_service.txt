@@ -1,0 +1,19 @@
+Done. To run the service locally:
+
+```bash
+cd /Users/annonymous/Desktop/GenAI_Data_Caffe/cadra-base-template
+python3 src/service/main.py
+```
+
+This starts uvicorn on `0.0.0.0:8000` (or `$PORT` if set). You can verify with:
+
+```bash
+curl http://localhost:8000/health
+# → {"status":"ok"}
+```
+
+Endpoints stubbed:
+- `GET /health` → `{"status": "ok"}`
+- `POST /ask` → returns `NO_ANSWER` with empty answer, zero cost/latency (latency real-measured)
+- `POST /actions` → returns `[]` empty list
+- FastAPI + uvicorn added to `requirements.txt`

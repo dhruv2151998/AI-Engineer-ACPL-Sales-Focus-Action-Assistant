@@ -1,0 +1,26 @@
+{
+  "distributor_note_west.docx": {
+    "text": "West Region \u2014 Distributor Supply Note\nTwo Mumbai distributors (D032 and D033) reported repeated out-of-stocks on the Beverages 1L line through the April\u2013June quarter, coinciding with the running promotion. Depot replenishment for that line has been slower than planned.\nThis note corroborates what the stock-out log already shows; it is provided as context for the review.",
+    "relevance_note": "Relevant \u2014 corroborates stock-out data for West distributors D032/D033 on Beverages 1L, supports playbook rules R-01/R-04/R-08."
+  },
+  "escalation_sop.docx": {
+    "text": "Sales Operations \u2014 Escalation SOP (rev 3)\nThis standard operating procedure governs how the weekly focus review turns findings into actions.\nPrinciples\nEvery recommended action must cite the playbook rule it follows. Actions that notify another team or change a commitment (supply escalations, replenishment orders, distributor calls) require a manager's approval before they are carried out; analysis and review actions do not.\nWhen a cause is not clear\nWhere a brand misses target and there is no stock-out and no promotion to explain it, do not attribute a cause from the numbers alone. Commission a market check, or if nothing explains it, flag it for manual review \u2014 never invent a reason.",
+    "relevance_note": "Relevant \u2014 defines the PENDING_APPROVAL gating rule and the 'never invent a cause' principle."
+  },
+  "hr_circular.docx": {
+    "text": "HR Circular \u2014 Field Force Leave Calendar\nReminder of the festive-season leave calendar for the field force. Unrelated to sales performance; included in the shared drive for completeness.",
+    "relevance_note": "Noise \u2014 HR leave calendar, unrelated to sales performance or actions."
+  },
+  "promo_circular_h2fy26.docx": {
+    "text": "Trade Promotions Circular \u2014 H2 FY26\nThe following mechanics are approved for the second half of the financial year, subject to regional sign-off. Regions should record actuals against each scheme in the usual tracker.\nBeverages: a 'Buy 2 Get 1' mechanic on the 1L pack in the West through May\u2013June.\nSnacks: a price-off on the 90g pack in the North in November.\nAll other schemes are handled locally and logged in the promotions export.",
+    "relevance_note": "Relevant \u2014 confirms approved H2 promotion mechanics; supports R-02/R-07 promo-effectiveness evaluation."
+  },
+  "visit_note_north_feb2026.docx": {
+    "text": "North Region \u2014 Market Visit Note (February 2026)\nPrepared by: Regional Sales Manager, North. Circulated to sales operations.\nTrade feedback\nAcross Jaipur and Lucknow, retailers reported that a competitor ran an unusually deep price-off campaign on mid-pack biscuits through most of February. Several stockists shifted shelf space and billing toward the competitor for the month.\nImpact\nOur CremeDelight range in the North lost roughly a quarter of its expected February offtake as a direct result of that competitor activity. There was no supply issue on our side and we were not running a counter-promotion, so the miss does not show up as a stock-out or a scheme in the numbers \u2014 it is entirely down to the competitor's February push.\nRecommendation from the field\nConsider a targeted counter-promotion or trade incentive for CremeDelight in the North next cycle.",
+    "relevance_note": "Relevant \u2014 documents competitor-driven CremeDelight miss in North (Feb 2026), providing context for R-03/R-06 manual-review handling."
+  },
+  "weekly_summary_w32.docx": {
+    "text": "Weekly Sales Summary \u2014 Week 32\nRoutine weekly roll-up. National primary sales in line with plan; no exceptions raised this week. Distributor claims processing on schedule. No action required.",
+    "relevance_note": "Noise \u2014 routine roll-up with no exceptions or actionable findings."
+  }
+}

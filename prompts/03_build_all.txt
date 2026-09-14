@@ -1,0 +1,27 @@
+Context: if docs/data_profile.md exists, use its findings on cross-source
+mismatches. Otherwise, decide reasonable reconciliations yourself as you go
+(standardize casing, resolve region/brand naming differences, align
+reporting grain) and document each decision inline as a code comment.
+
+Build all of the following in one pass:
+
+1. scripts/prepare_data.py — load all 7 CSVs from DataSet/ read-only, clean
+   and normalize keys, write into data/warehouse.db (SQLite) with clear
+   table names. Never modify files in DataSet/. Print, and also save to
+   data/prep_summary.json: row count per source file, and the national
+   FY26 primary-sales total in INR.
+
+2. scripts/parse_playbook.py — parse DataSet/action_playbook.xlsx into a
+   "playbook_rules" table in warehouse.db: rule_id, condition description,
+   a queryable condition, recommendation, action_text, requires_approval.
+   Generate stable rule_ids (PB-001, PB-002...) if the sheet lacks them.
+
+3. scripts/load_documents.py — read all 6 files in DataSet/documents/,
+   store as {filename: full_text} in data/documents.json. For each, add a
+   one-line note on whether it's relevant to sales actions or is noise.
+
+4. Save a mismatches log to docs/mismatches.md: one line per cross-source
+   inconsistency found and how it was resolved.
+
+Run all three scripts and show me the final printed summary (row counts,
+INR total, and mismatches list). Do not build the API service yet.

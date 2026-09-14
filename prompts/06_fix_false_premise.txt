@@ -1,0 +1,23 @@
+Bug: for "Why did GlucoJoy sales fall to zero in the North in Q1 FY26?"
+the service returned status OK with evidence showing clearly non-zero
+values (Jul/Aug/Sep 2025), but the answer text falsely claimed "Q1 FY26"
+means October-December and that no data existed — contradicting its own
+evidence. The false premise ("fell to zero") was never caught.
+
+Fix in the answer-generation step of src/service/ask.py:
+1. Change the second LLM call to respond with JSON only:
+   {"premise_valid": true/false, "answer": "..."}
+2. Instruct it explicitly: compare any factual claim in the original
+   question (a value being zero, negative, the highest/lowest, having
+   risen/fallen, etc.) against the evidence rows. If evidence contradicts
+   the claim, set premise_valid to false and explain the contradiction
+   using the real evidence numbers.
+3. It must describe time periods only using the exact values present in
+   the evidence (e.g. "2025-07") — never invent its own definition of a
+   quarter or date range.
+4. In the calling code: if premise_valid is false, set the response
+   status to "NO_ANSWER" instead of "OK", using the returned answer text
+   as the reason. Keep evidence populated since it's what proves the
+   premise false.
+
+Show me the diff to ask.py only.

@@ -1,0 +1,25 @@
+Replace the Gemini-specific LLM calls in the /ask implementation with Groq
+instead, since Gemini's free tier rate limit is too restrictive for testing.
+
+Use the official `openai` Python package (add to requirements.txt if
+missing), configured as:
+  from openai import OpenAI
+  client = OpenAI(base_url="https://api.groq.com/openai/v1",
+                   api_key=os.environ["deleted_for_security"])
+Model: "llama-3.1-8b-instant"
+
+Keep the exact same two-call structure as before: (1) extract structured
+intent as JSON only, (2) phrase the final answer restricted to the
+evidence provided. Keep entity validation and the deterministic
+pandas/SQL query logic in main.py completely unchanged — only the LLM
+call mechanism changes.
+
+For cost_usd: read response.usage.prompt_tokens and
+response.usage.completion_tokens from each Groq response, and compute
+cost using these exact rates as named constants:
+  INPUT_COST_PER_TOKEN = 0.05 / 1_000_000
+  OUTPUT_COST_PER_TOKEN = 0.08 / 1_000_000
+Sum cost across both LLM calls per request for the final cost_usd.
+
+Remove google-generativeai from requirements.txt if it was added. Show me
+a sample curl command to test /ask once done.

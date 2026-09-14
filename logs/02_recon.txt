@@ -1,0 +1,16 @@
+Now lets read the CSVs, action playbook, and documents in parallel.
+Now let me run a thorough cross-file comparison of identifiers:
+Now let me check the specific "East Region" variants more carefully, and whether `stockouts.csv` uses region names that don't match `dim_geo`:
+Check the `stockouts` for `region` column naming vs `dim_geo` and also check date format in promotions:
+Now I have all the data needed. Let me write the report
+Done. Report written to `docs/data_profile.md`. Here's a quick summary of what it covers:
+
+- **7 CSVs**: row counts (40, 120, 12, 74,880, 720, 40, 520), no nulls anywhere, full column dtypes, 3 sample rows each
+- **Action playbook**: 1 sheet, 8 rules (R-01 to R-08), 3 with `needs_approval=Yes`
+- **6 documents**: 4 relevant, 2 noise (hr_circular, weekly_summary_w32)
+- **9 cross-file inconsistencies flagged**, including:
+  - stockouts `region` has **16 casing/suffix variants** (e.g. `EAST`, `east`, `East Region` all map to `East`)
+  - 4 column naming mismatches (e.g. `sku`/`item_code`/`sku_code`)
+  - 3 different date formats (ISO, DD/MM/YYYY, YYYY-MM)
+  - Granularity mismatch (SKU×territory×week vs. brand×region×month)
+  - Missing territory_code in stockouts

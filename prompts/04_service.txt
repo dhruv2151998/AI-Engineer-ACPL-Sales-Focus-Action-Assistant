@@ -1,0 +1,22 @@
+Build a FastAPI service in src/service/main.py with:
+
+POST /ask — request: {"question": "..."}
+response: {"answer": "...", "status": "OK | NO_ANSWER",
+"evidence": [{"field": "value"}], "cost_usd": 0.0, "latency_ms": 0}
+
+POST /actions — request: {"scope": "region or 'all'"}
+response: [{"finding": "...", "rule_id": "...", "action": "...",
+"state": "RECOMMENDED | PENDING_APPROVAL"}]
+
+For now, both endpoints should return a valid but trivial NO_ANSWER /
+empty-list response — no real logic yet. Measure latency_ms using
+time.perf_counter() around the (currently empty) work, even though
+there's nothing to time yet. cost_usd stays 0.0 for now.
+
+Add GET /health returning {"status": "ok"}.
+Read PORT from environment, default 8000, using uvicorn.run in a
+if __name__ == "__main__" block.
+
+Also add FastAPI and uvicorn to requirements.txt if missing.
+
+Show me the exact command to run it locally.

@@ -1,0 +1,7 @@
+All three cases work correctly now:
+
+- "fell to zero" → `NO_ANSWER` with evidence that proves non-zero values (correct, was `OK` before)
+- Normal query → `OK` with correct numbers
+- False "highest" claim → `NO_ANSWER` explaining the evidence doesn't support it
+
+The only change was in `ask.py` — the second LLM call now requests JSON `{"premise_valid": bool, "answer": "..."}`, compares the question's factual claims against evidence, and the calling code sets `status: "NO_ANSWER"` when `premise_valid` is false while preserving the evidence array.

@@ -1,0 +1,6 @@
+Read BRIEF.md at the repo root, plus README.md, APPROACH.md, ARTEFACT.md,
+opencode.json, requirements.txt, and src/solution.py.
+
+Task: summarize back, as a short bullet list only, the exact /ask and
+/actions request/response shapes, and every hard rule around NO_ANSWER,
+PENDING_APPROVAL, evidence, and rule_id. Do not write or edit any files.

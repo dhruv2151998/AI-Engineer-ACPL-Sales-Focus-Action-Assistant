@@ -1,0 +1,12 @@
+{
+  "row_counts": {
+    "dim_distributor.csv": 40,
+    "dim_sku.csv": 120,
+    "dim_geo.csv": 12,
+    "fact_primary_sales.csv": 74880,
+    "fact_targets.csv": 720,
+    "promotions.csv": 40,
+    "stockouts.csv": 520
+  },
+  "national_fy26_primary_sales_inr": 1357631078.74
+}
