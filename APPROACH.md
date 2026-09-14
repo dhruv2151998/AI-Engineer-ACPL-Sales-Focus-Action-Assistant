@@ -44,6 +44,12 @@ gating (`RECOMMENDED` vs `PENDING_APPROVAL`) is read directly from the
 playbook's `needs_approval` column. The service performs no side effects
 in either state — nothing is ever notified or executed, matching the
 contract's requirement that anything which would act stays pending.
+Known gap: the R-06 "external/unknown cause" path currently does not
+cross-reference the loaded document text before flagging a cause as
+unknown — e.g. it flags CremeDelight's Feb 2026 North miss for manual
+review even though visit_note_north_feb2026.docx already documents a
+competitor price-off as the cause. Documents are loaded
+(scripts/load_documents.py) but not yet joined into this decision path.
 
 ## E. Operations
 `cost_usd` is computed from real token usage returned by Groq's API

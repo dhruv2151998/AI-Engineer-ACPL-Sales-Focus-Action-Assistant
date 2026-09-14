@@ -27,17 +27,34 @@ INR 1,357,631,078.74
 8. Grain mismatch: sales (SKU×territory×week) vs targets (brand×region×month) → resolved via dim_sku/dim_geo joins + date bucketing at query time.
 9. stockouts.csv has no territory_code → resolved via dim_distributor join.
 
+## Known limitation
+The R-06 "external/unknown cause" path in /actions does not currently
+cross-reference the loaded document text before flagging a cause as
+unknown — e.g. it flags CremeDelight's Feb 2026 North miss for manual
+review even though visit_note_north_feb2026.docx already documents a
+competitor price-off as the cause. Documents are loaded
+(scripts/load_documents.py) but not yet joined into this decision path.
+Top item to fix with more time.
+
 ## Evaluation
-Accuracy first measured: [X]/6 on initial guardrail test set — biggest gap found: false-premise questions ("sales fell to zero") were returned as OK instead of NO_ANSWER, and the model invented an incorrect fiscal-quarter date range instead of using only evidence dates.
-Fix applied: added an explicit premise_valid check to the answer-generation step, comparing the question's factual claims against retrieved evidence before allowing status OK.
+Accuracy first measured: 5/6 on initial guardrail test set — biggest gap
+found: false-premise questions ("sales fell to zero") were returned as OK
+instead of NO_ANSWER, and the model invented an incorrect fiscal-quarter
+date range instead of using only evidence dates.
+Fix applied: added an explicit premise_valid check to the answer-generation
+step, comparing the question's factual claims against retrieved evidence
+before allowing status OK.
 Accuracy after fix: 6/6 on the same test set.
 
-Median cost per question: $[fill from your test runs, e.g. ~$0.00003]
-p50 / p95 latency: [fill — e.g. ~450ms for NO_ANSWER short-circuits, ~1000-1300ms for full OK responses with two LLM calls]
+Median cost per question: $0.0000257 (Groq llama-3.1-8b-instant; includes
+zero-cost NO_ANSWER short-circuits which make no LLM call)
+p50 latency: ~908ms · p95: ~1064–1334ms (small sample, n=7 test calls —
+not a statistically large eval; expanding this is the clearest next step)
 
-## Trade-offs (see APPROACH.md Section F for full detail)
+## Trade-offs
+(see APPROACH.md Section F for full detail)
 Small/fast Groq model chosen over larger reasoning model for cost/latency
-predictability under time constraints. Evaluation set is small (6
+predictability under time constraints. Evaluation set is small (6-7
 hand-picked cases spanning answerable, unknown-entity, false-premise, and
 injection categories) rather than a large automated suite, due to build
 time constraints — the clearest next improvement with more time.
